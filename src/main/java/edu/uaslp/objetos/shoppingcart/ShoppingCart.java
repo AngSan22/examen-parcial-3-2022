@@ -32,11 +32,13 @@ public class ShoppingCart {
     }
 
     public void addItem(Item item) {
-        for (int i=0; i<shoppingCart.size(); i++){
-            if(shoppingCart.get(i).getCode() == item.getCode() && shoppingCart.get(i).getUnitCost() == item.getUnitCost()){
-                shoppingCart.get(i).setQuantity(shoppingCart.get(i).getQuantity() + item.getQuantity());
+        for (Item item1: shoppingCart){
+            if (item1.getCode() == item.getCode() && item1.getUnitCost().compareTo(item.getUnitCost()) == 0){
+                item1.setQuantity(item1.getQuantity() + item.getQuantity());
+                return;
             }
         }
+
         shoppingCart.add(item);
     }
 
@@ -51,6 +53,15 @@ public class ShoppingCart {
         return shoppingCart;
     }
 
-    public void removeItem(String item) {
+    public void removeItem(String code) {
+        for (Item item : shoppingCart){
+            if (item.getCode() == code){
+                item.setQuantity(item.getQuantity() - 1);
+                if (item.getQuantity() == 0){
+                    shoppingCart.remove(item);
+                }
+                break;
+            }
+        }
     }
 }
